@@ -1,0 +1,2 @@
+<!ENTITY cmd.sortbylocales.label  "按名称排序（基于 localeCompare）">
+<!ENTITY cmd.sortbysql.label      "按名称排序（基于 SQL）">

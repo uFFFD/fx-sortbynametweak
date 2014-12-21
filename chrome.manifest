@@ -3,3 +3,5 @@ content  sortbynametweak  content/
 overlay  chrome://browser/content/places/placesOverlay.xul  chrome://sortbynametweak/content/placesContextMenuOverlay.xul
 
 locale   sortbynametweak  en-US  locale/en-US/
+locale   sortbynametweak  zh-CN  locale/zh-CN/
+locale   sortbynametweak  zh-TW  locale/zh-TW/

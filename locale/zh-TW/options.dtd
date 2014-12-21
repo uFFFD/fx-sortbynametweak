@@ -1,0 +1,32 @@
+<!ENTITY prefsTitle.label                               "Sort By Name Tweak 選項">
+<!ENTITY localeCompareLocales.label                     "localeCompare 地區設定">
+<!ENTITY useFirefoxLocale.label                         "Firefox">
+<!ENTITY useCustomLocales.label                         "自訂">
+<!ENTITY localesNotSupported.label                      "不支援">
+<!ENTITY localeCompareOptions.label                     "localeCompare 選項">
+<!ENTITY localeCompareOptions.localeMatcher.label       "localeMatcher:">
+<!ENTITY localeMatcher.lookup.label                     "lookup">
+<!ENTITY localeMatcher.bestfit.label                    "best fit">
+<!ENTITY localeCompareOptions.usage.label               "usage:">
+<!ENTITY usage.sort.label                               "sort">
+<!ENTITY usage.search.label                             "search">
+<!ENTITY localeCompareOptions.sensitivity.label         "sensitivity:">
+<!ENTITY sensitivity.base.label                         "base">
+<!ENTITY sensitivity.accent.label                       "accent">
+<!ENTITY sensitivity.case.label                         "case">
+<!ENTITY sensitivity.variant.label                      "variant">
+<!ENTITY localeCompareOptions.ignorePunctuation.label   "ignorePunctuation:">
+<!ENTITY ignorePunctuation.true.label                   "true">
+<!ENTITY ignorePunctuation.false.label                  "false">
+<!ENTITY localeCompareOptions.numeric.label             "numeric:">
+<!ENTITY numeric.true.label                             "true">
+<!ENTITY numeric.false.label                            "false">
+<!ENTITY localeCompareOptions.caseFirst.label           "caseFirst:">
+<!ENTITY caseFirst.upper.label                          "upper">
+<!ENTITY caseFirst.lower.label                          "lower">
+<!ENTITY caseFirst.false.label                          "false">
+<!ENTITY testLocales.label                              "測試">
+<!ENTITY moreAboutLocaleCompare.label                   "更多關於 String.prototype.localeCompare()">
+<!ENTITY customLocales.tooltip                          "地區設定或逗號區隔的地區列表">
+<!ENTITY defaultOption.tooltip                          "預設">
+<!ENTITY reset.label                                    "重置">
