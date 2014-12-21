@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://sortbynametweak/locale/placesContextMenuOverlay.dtd">
+<overlay id="sortbynametweak"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/javascript"
+          src="chrome://global/content/nsUserSettings.js" />
+  <script type="application/javascript"
+          src="chrome://sortbynametweak/content/sortbynametweak.js" />
+
+  <commandset id="placesCommands">
+    <command id="sortbynametweakCmd_sortByLocales"
+             oncommand="sortbynametweak.sortByLocales();" />
+    <command id="sortbynametweakCmd_sortBySQL"
+             oncommand="sortbynametweak.sortBySQL();" />
+  </commandset>
+
+  <menupopup id="placesContext">
+    <menuitem id="sortbynametweak_sortByLocales"
+              label="&cmd.sortbylocales.label;"
+              selection="folder"
+              closemenu="single"
+              command="sortbynametweakCmd_sortByLocales"
+              insertbefore="placesContext_sortSeparator" />
+    <menuitem id="sortbynametweak_sortBySQL"
+              label="&cmd.sortbysql.label;"
+              selection="folder"
+              closemenu="single"
+              command="sortbynametweakCmd_sortBySQL"
+              insertbefore="placesContext_sortSeparator" />
+  </menupopup>
+</overlay>

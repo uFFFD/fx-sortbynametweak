@@ -1,0 +1,13 @@
+#localeCompareLocales radio {
+  min-width: 100px;
+}
+#localeCompareOptions radio {
+  min-width: 70px;
+}
+.localesNotSupported {
+  color: #f00;
+  font-weight: bold;
+}
+#sbnt_testStrings, #sbnt_testStringsResult {
+  min-width: 200px;
+}

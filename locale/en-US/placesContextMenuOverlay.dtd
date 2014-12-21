@@ -1,0 +1,2 @@
+<!ENTITY cmd.sortbylocales.label  "Sort By Name (localeCompare based)">
+<!ENTITY cmd.sortbysql.label      "Sort By Name (SQL based)">

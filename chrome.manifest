@@ -1,0 +1,5 @@
+content  sortbynametweak  content/
+
+overlay  chrome://browser/content/places/placesOverlay.xul  chrome://sortbynametweak/content/placesContextMenuOverlay.xul
+
+locale   sortbynametweak  en-US  locale/en-US/

@@ -1,0 +1,32 @@
+<!ENTITY prefsTitle.label                               "Sort By Name Tweak Options">
+<!ENTITY localeCompareLocales.label                     "localeCompare locales">
+<!ENTITY useFirefoxLocale.label                         "Firefox">
+<!ENTITY useCustomLocales.label                         "Custom">
+<!ENTITY localesNotSupported.label                      "not supported">
+<!ENTITY localeCompareOptions.label                     "localeCompare options">
+<!ENTITY localeCompareOptions.localeMatcher.label       "localeMatcher:">
+<!ENTITY localeMatcher.lookup.label                     "lookup">
+<!ENTITY localeMatcher.bestfit.label                    "best fit">
+<!ENTITY localeCompareOptions.usage.label               "usage:">
+<!ENTITY usage.sort.label                               "sort">
+<!ENTITY usage.search.label                             "search">
+<!ENTITY localeCompareOptions.sensitivity.label         "sensitivity:">
+<!ENTITY sensitivity.base.label                         "base">
+<!ENTITY sensitivity.accent.label                       "accent">
+<!ENTITY sensitivity.case.label                         "case">
+<!ENTITY sensitivity.variant.label                      "variant">
+<!ENTITY localeCompareOptions.ignorePunctuation.label   "ignorePunctuation:">
+<!ENTITY ignorePunctuation.true.label                   "true">
+<!ENTITY ignorePunctuation.false.label                  "false">
+<!ENTITY localeCompareOptions.numeric.label             "numeric:">
+<!ENTITY numeric.true.label                             "true">
+<!ENTITY numeric.false.label                            "false">
+<!ENTITY localeCompareOptions.caseFirst.label           "caseFirst:">
+<!ENTITY caseFirst.upper.label                          "upper">
+<!ENTITY caseFirst.lower.label                          "lower">
+<!ENTITY caseFirst.false.label                          "false">
+<!ENTITY testLocales.label                              "Test">
+<!ENTITY moreAboutLocaleCompare.label                   "Learn more about String.prototype.localeCompare()">
+<!ENTITY customLocales.tooltip                          "Locale or comma-separated list of locales">
+<!ENTITY defaultOption.tooltip                          "default">
+<!ENTITY reset.label                                    "Reset">
