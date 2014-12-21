@@ -1,0 +1,28 @@
+XPI = sortbynametweak@uFFFD.xpi
+
+FIREFOX = firefox
+BINARY = path/to/firefox/$(FIREFOX)
+BETA = path/to/beta/$(FIREFOX)
+AURORA = path/to/aurora/$(FIREFOX)
+NIGHTLY = path/to/nightly/$(FIREFOX)
+
+LOCALE = en-US
+ARGS = --addon $(XPI) --preferences user.json --app-arg "-jsconsole" --pref "general.useragent.locale:$(LOCALE)"
+
+xpi:
+	python xpi.py $(XPI) install.rdf chrome.manifest icon.png icon64.png content/ defaults/ locale/
+
+run: xpi
+	mozrunner $(ARGS) --binary $(BINARY)
+
+beta: BINARY=$(BETA)
+beta: run
+
+aurora: BINARY = $(AURORA)
+aurora: run
+
+nightly: BINARY = $(NIGHTLY)
+nightly: run
+
+clean:
+	-rm $(XPI)
