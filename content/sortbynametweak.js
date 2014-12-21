@@ -179,19 +179,36 @@ let sortbynametweak = {
   },
 
   get isCmdEnabled () {
-    // chrome://browser/content/places/controller.js
-    if (PlacesUIUtils.useAsyncTransactions) {
-      return false;
+    if (Services.vc.compare(Services.appinfo.platformVersion, "35.*") > 0) {
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=1068671
+      // they replaced PlacesUtils.nodeIsReadOnly with PlacesUIUtils.isContentsReadOnly
+      // and claimed that "DO NOT USE THIS API IN ADDONS."
+      // see http://hg.mozilla.org/mozilla-central/file/112e932d34a5/browser/components/places/PlacesUIUtils.jsm#l627
+      // so let's check if placesCmd_sortBy:name is enabled as a workaround
+      const placesCmd_sortBy_name = document.getElementById("placesCmd_sortBy:name");
+      if (placesCmd_sortBy_name) {
+        return !(placesCmd_sortBy_name.hasAttribute("disabled") && placesCmd_sortBy_name.getAttribute("disabled") == "true");
+      }
+      else {
+        return false; // or should it return true? I'm not sure
+      }
     }
-    const view = this.view;
-    if (!view) {
-      return false;
+    else {
+      // firefox 29~35
+      // chrome://browser/content/places/controller.js
+      if (PlacesUIUtils.useAsyncTransactions) {
+        return false;
+      }
+      const view = this.view;
+      if (!view) {
+        return false;
+      }
+      const selectedNode = view.selectedNode;
+      return selectedNode &&
+             PlacesUtils.nodeIsFolder(selectedNode) &&
+             !PlacesUtils.nodeIsReadOnly(selectedNode) &&
+             view.result.sortingMode == Ci.nsINavHistoryQueryOptions.SORT_BY_NONE;
     }
-    const selectedNode = view.selectedNode;
-    return selectedNode &&
-           PlacesUtils.nodeIsFolder(selectedNode) &&
-           !PlacesUtils.nodeIsReadOnly(selectedNode) &&
-           view.result.sortingMode == Ci.nsINavHistoryQueryOptions.SORT_BY_NONE;
   },
 
   get view () {
