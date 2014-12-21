@@ -139,118 +139,119 @@ this.SBNTSortFolderByNameTransaction =
   this.item.options = options;
 }
 
-SBNTSortFolderByNameTransaction.prototype = {
-  __proto__: BaseTransaction.prototype,
+// AMO says "Using __proto__ or setPrototypeOf to set a prototype is now deprecated."
+// see https://bugzilla.mozilla.org/show_bug.cgi?id=948227
+// "Particularly with IE11 adding support for this, we need to act on this now"
+// though PlacesUtils.jsm is still making heavy use of __proto__ now
+// let's fix it here anyway
+SBNTSortFolderByNameTransaction.prototype = Object.create(BaseTransaction.prototype);
+SBNTSortFolderByNameTransaction.prototype.constructor = SBNTSortFolderByNameTransaction;
 
-  getOrderBySQL: function SFBNT_getOrderBySQL()
-  {
-    const order = {};
-    const historyService = Cc["@mozilla.org/browser/nav-history-service;1"].
-                          getService(Ci.nsINavHistoryService);
-    const bookmarkService = Cc["@mozilla.org/browser/nav-bookmarks-service;1"].
-                           getService(Ci.nsINavBookmarksService);
-    const query = historyService.getNewQuery();
-    query.setFolders([this.item.id], 1);
-    const options = historyService.getNewQueryOptions();
-    options.queryType = options.QUERY_TYPE_BOOKMARKS;
-    options.sortingMode = options.SORT_BY_TITLE_ASCENDING;
-    const result = historyService.executeQuery(query, options);
-    const resultContainerNode = result.root;
-    resultContainerNode.containerOpen = true;
-    for (let i = 0; i < resultContainerNode.childCount; i++) {
-      order[resultContainerNode.getChild(i).itemId] = i;
-    }
-    resultContainerNode.containerOpen = false;
-    return order;
-  },
-
-  doTransaction: function SFBNTXN_doTransaction()
-  {
-    this._oldOrder = [];
-
-    let contents =
-      PlacesUtils.getFolderContents(this.item.id, false, false).root;
-
-    let count = contents.childCount;
-
-    const sortBy = this.item.sortBy;
-    let locales;
-    let options;
-    let orderBySQL;
-    switch (sortBy) {
-      case SBNTPlacesUtils.SORT_BY_LOCALES:
-        locales = this.item.locales;
-        options = this.item.options;
-        break;
-      case SBNTPlacesUtils.SORT_BY_SQL:
-        orderBySQL = this.getOrderBySQL();
-        break;
-    }
-
-    // sort between separators
-    let newOrder = [];
-    let preSep = []; // temporary array for sorting each group of items
-    let sortingMethod =
-      function (a, b) {
-        if (PlacesUtils.nodeIsContainer(a) && !PlacesUtils.nodeIsContainer(b))
-          return -1;
-        if (!PlacesUtils.nodeIsContainer(a) && PlacesUtils.nodeIsContainer(b))
-          return 1;
-
-        switch (sortBy) {
-          case SBNTPlacesUtils.SORT_BY_LOCALES:
-            // bug 853301
-            // Enable ECMAScript Internationalization API for desktop Firefox
-            // str.localeCompare(compareString [, locales [, options]])
-            return a.title.localeCompare(b.title, locales, options);
-          case SBNTPlacesUtils.SORT_BY_SQL:
-            return orderBySQL[a.itemId] - orderBySQL[b.itemId];
-          default:
-            return a.title.localeCompare(b.title);
-        }
-      };
-
-    for (let i = 0; i < count; ++i) {
-      let item = contents.getChild(i);
-      this._oldOrder[item.itemId] = i;
-      if (PlacesUtils.nodeIsSeparator(item)) {
-        if (preSep.length > 0) {
-          preSep.sort(sortingMethod);
-          newOrder = newOrder.concat(preSep);
-          preSep.splice(0, preSep.length);
-        }
-        newOrder.push(item);
-      }
-      else
-        preSep.push(item);
-    }
-    contents.containerOpen = false;
-
-    if (preSep.length > 0) {
-      preSep.sort(sortingMethod);
-      newOrder = newOrder.concat(preSep);
-    }
-
-    // set the new indexes
-    let callback = {
-      runBatched: function() {
-        for (let i = 0; i < newOrder.length; ++i) {
-          PlacesUtils.bookmarks.setItemIndex(newOrder[i].itemId, i);
-        }
-      }
-    };
-    PlacesUtils.bookmarks.runInBatchMode(callback, null);
-  },
-
-  undoTransaction: function SFBNTXN_undoTransaction()
-  {
-    let callback = {
-      _self: this,
-      runBatched: function() {
-        for (item in this._self._oldOrder)
-          PlacesUtils.bookmarks.setItemIndex(item, this._self._oldOrder[item]);
-      }
-    };
-    PlacesUtils.bookmarks.runInBatchMode(callback, null);
+SBNTSortFolderByNameTransaction.prototype.getOrderBySQL = function SFBNT_getOrderBySQL() {
+  const order = {};
+  const historyService = Cc["@mozilla.org/browser/nav-history-service;1"].
+                        getService(Ci.nsINavHistoryService);
+  const bookmarkService = Cc["@mozilla.org/browser/nav-bookmarks-service;1"].
+                         getService(Ci.nsINavBookmarksService);
+  const query = historyService.getNewQuery();
+  query.setFolders([this.item.id], 1);
+  const options = historyService.getNewQueryOptions();
+  options.queryType = options.QUERY_TYPE_BOOKMARKS;
+  options.sortingMode = options.SORT_BY_TITLE_ASCENDING;
+  const result = historyService.executeQuery(query, options);
+  const resultContainerNode = result.root;
+  resultContainerNode.containerOpen = true;
+  for (let i = 0; i < resultContainerNode.childCount; i++) {
+    order[resultContainerNode.getChild(i).itemId] = i;
   }
-};
+  resultContainerNode.containerOpen = false;
+  return order;
+}
+
+SBNTSortFolderByNameTransaction.prototype.doTransaction = function SFBNTXN_doTransaction() {
+  this._oldOrder = [];
+
+  let contents =
+    PlacesUtils.getFolderContents(this.item.id, false, false).root;
+
+  let count = contents.childCount;
+
+  const sortBy = this.item.sortBy;
+  let locales;
+  let options;
+  let orderBySQL;
+  switch (sortBy) {
+    case SBNTPlacesUtils.SORT_BY_LOCALES:
+      locales = this.item.locales;
+      options = this.item.options;
+      break;
+    case SBNTPlacesUtils.SORT_BY_SQL:
+      orderBySQL = this.getOrderBySQL();
+      break;
+  }
+
+  // sort between separators
+  let newOrder = [];
+  let preSep = []; // temporary array for sorting each group of items
+  let sortingMethod =
+    function (a, b) {
+      if (PlacesUtils.nodeIsContainer(a) && !PlacesUtils.nodeIsContainer(b))
+        return -1;
+      if (!PlacesUtils.nodeIsContainer(a) && PlacesUtils.nodeIsContainer(b))
+        return 1;
+
+      switch (sortBy) {
+        case SBNTPlacesUtils.SORT_BY_LOCALES:
+          // bug 853301
+          // Enable ECMAScript Internationalization API for desktop Firefox
+          // str.localeCompare(compareString [, locales [, options]])
+          return a.title.localeCompare(b.title, locales, options);
+        case SBNTPlacesUtils.SORT_BY_SQL:
+          return orderBySQL[a.itemId] - orderBySQL[b.itemId];
+        default:
+          return a.title.localeCompare(b.title);
+      }
+    };
+
+  for (let i = 0; i < count; ++i) {
+    let item = contents.getChild(i);
+    this._oldOrder[item.itemId] = i;
+    if (PlacesUtils.nodeIsSeparator(item)) {
+      if (preSep.length > 0) {
+        preSep.sort(sortingMethod);
+        newOrder = newOrder.concat(preSep);
+        preSep.splice(0, preSep.length);
+      }
+      newOrder.push(item);
+    }
+    else
+      preSep.push(item);
+  }
+  contents.containerOpen = false;
+
+  if (preSep.length > 0) {
+    preSep.sort(sortingMethod);
+    newOrder = newOrder.concat(preSep);
+  }
+
+  // set the new indexes
+  let callback = {
+    runBatched: function() {
+      for (let i = 0; i < newOrder.length; ++i) {
+        PlacesUtils.bookmarks.setItemIndex(newOrder[i].itemId, i);
+      }
+    }
+  };
+  PlacesUtils.bookmarks.runInBatchMode(callback, null);
+}
+
+SBNTSortFolderByNameTransaction.prototype.undoTransaction = function SFBNTXN_undoTransaction() {
+  let callback = {
+    _self: this,
+    runBatched: function() {
+      for (item in this._self._oldOrder)
+        PlacesUtils.bookmarks.setItemIndex(item, this._self._oldOrder[item]);
+    }
+  };
+  PlacesUtils.bookmarks.runInBatchMode(callback, null);
+}
