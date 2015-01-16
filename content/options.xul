@@ -62,181 +62,193 @@
                   type="unichar" />
     </preferences>
 
-    <vbox>
-      <groupbox id="localeCompareLocales">
-        <caption label="&localeCompareLocales.label;" />
-        <radiogroup id="sbnt_localeCompareLocales"
-                    preference="sbnt_pref_useFirefoxLocale">
-          <grid>
-            <columns>
-              <column />
-              <column />
-            </columns>
+    <tabbox id="tablist" flex="1">
+      <tabs>
+        <tab id="general"
+             label="General" />
+        <tab id="advanced"
+             label="Advanced" />
+      </tabs>
+      <tabpanels flex="1">
+        <tabpanel id="generaltab" orient="vertical">
+        </tabpanel>
+        <tabpanel id="advancedtab" orient="vertical">
+          <groupbox id="localeCompareLocales">
+            <caption label="&localeCompareLocales.label;" />
+            <radiogroup id="sbnt_localeCompareLocales"
+                        preference="sbnt_pref_useFirefoxLocale">
+              <grid>
+                <columns>
+                  <column />
+                  <column />
+                </columns>
 
-            <rows>
-              <row align="center">
-                <radio id="sbnt_useFirefoxLocale"
-                       label="&useFirefoxLocale.label;"
-                       value="true" />
-                <textbox id="sbnt_firefoxLocale"
-                         preference="general_useragent_locale"
-                         readonly="true" />
-                <label id="firefoxLocaleNotSupported"
-                       class="localesNotSupported"
-                       value="&localesNotSupported.label;" />
-              </row>
-              <row align="center">
-                <radio id="sbnt_useCustomLocales"
-                       label="&useCustomLocales.label;"
-                       value="false" />
-                <textbox id="sbnt_customLocales"
-                         preference="sbnt_pref_customLocales"
-                         tooltiptext="&customLocales.tooltip;" />
-                <label id="customLocalesNotSupported"
-                       class="localesNotSupported"
-                       value="&localesNotSupported.label;" />
-              </row>
-            </rows>
-          </grid>
-        </radiogroup>
-      </groupbox>
+                <rows>
+                  <row align="center">
+                    <radio id="sbnt_useFirefoxLocale"
+                           label="&useFirefoxLocale.label;"
+                           value="true" />
+                    <textbox id="sbnt_firefoxLocale"
+                             preference="general_useragent_locale"
+                             readonly="true" />
+                    <label id="firefoxLocaleNotSupported"
+                           class="localesNotSupported"
+                           value="&localesNotSupported.label;" />
+                  </row>
+                  <row align="center">
+                    <radio id="sbnt_useCustomLocales"
+                           label="&useCustomLocales.label;"
+                           value="false" />
+                    <textbox id="sbnt_customLocales"
+                             preference="sbnt_pref_customLocales"
+                             tooltiptext="&customLocales.tooltip;" />
+                    <label id="customLocalesNotSupported"
+                           class="localesNotSupported"
+                           value="&localesNotSupported.label;" />
+                  </row>
+                </rows>
+              </grid>
+            </radiogroup>
+          </groupbox>
 
-      <groupbox id="localeCompareOptions">
-        <caption label="&localeCompareOptions.label;" />
-        <grid>
-          <columns>
-            <column />
-            <column />
-            <column />
-            <column />
-            <column />
-          </columns>
+          <groupbox id="localeCompareOptions">
+            <caption label="&localeCompareOptions.label;" />
+            <grid>
+              <columns>
+                <column />
+                <column />
+                <column />
+                <column />
+                <column />
+              </columns>
 
-          <rows>
-            <row align="center">
-              <hbox pack="end">
-                <label value="&localeCompareOptions.localeMatcher.label;" />
-              </hbox>
-              <radiogroup preference="sbnt_pref_lco_localeMatcher">
-                <hbox>
-                  <radio label="&localeMatcher.lookup.label;"
-                         value="lookup" />
-                  <radio label="&localeMatcher.bestfit.label;"
-                         value="best fit"
-                         tooltiptext="&defaultOption.tooltip;" />
-                </hbox>
-              </radiogroup>
-            </row>
-            <row align="center">
-              <hbox pack="end">
-                <label value="&localeCompareOptions.usage.label;" />
-              </hbox>
-              <radiogroup preference="sbnt_pref_lco_usage">
-                <hbox>
-                  <radio label="&usage.sort.label;"
-                         value="sort"
-                         tooltiptext="&defaultOption.tooltip;" />
-                  <radio label="&usage.search.label;"
-                         value="search" />
-                </hbox>
-              </radiogroup>
-            </row>
-            <row align="center">
-              <hbox pack="end">
-                <label value="&localeCompareOptions.sensitivity.label;" />
-              </hbox>
-              <radiogroup preference="sbnt_pref_lco_sensitivity">
-                <hbox>
-                  <radio label="&sensitivity.base.label;"
-                         value="base" />
-                  <radio label="&sensitivity.accent.label;"
-                         value="accent" />
-                  <radio label="&sensitivity.case.label;"
-                         value="case" />
-                  <radio label="&sensitivity.variant.label;"
-                         value="variant"
-                         tooltiptext="&defaultOption.tooltip;" />
-                </hbox>
-              </radiogroup>
-            </row>
-            <row align="center">
-              <hbox pack="end">
-                <label value="&localeCompareOptions.ignorePunctuation.label;" />
-              </hbox>
-              <radiogroup preference="sbnt_pref_lco_ignorePunctuation">
-                <hbox>
-                  <radio label="&ignorePunctuation.true.label;"
-                         value="true" />
-                  <radio label="&ignorePunctuation.false.label;"
-                         value="false"
-                         tooltiptext="&defaultOption.tooltip;" />
-                </hbox>
-              </radiogroup>
-            </row>
-            <row align="center">
-              <hbox pack="end">
-                <label value="&localeCompareOptions.numeric.label;" />
-              </hbox>
-              <radiogroup preference="sbnt_pref_lco_numeric">
-                <hbox>
-                  <radio label="&numeric.true.label;"
-                         value="true" />
-                  <radio label="&numeric.false.label;"
-                         value="false"
-                         tooltiptext="&defaultOption.tooltip;" />
-                </hbox>
-              </radiogroup>
-            </row>
-            <row align="center">
-              <hbox pack="end">
-                <label value="&localeCompareOptions.caseFirst.label;" />
-              </hbox>
-              <radiogroup preference="sbnt_pref_lco_caseFirst">
-                <hbox>
-                  <radio label="&caseFirst.upper.label;"
-                         value="upper" />
-                  <radio label="&caseFirst.lower.label;"
-                         value="lower" />
-                  <radio label="&caseFirst.false.label;"
-                         value="false"
-                         tooltiptext="&defaultOption.tooltip;" />
-                </hbox>
-              </radiogroup>
-            </row>
-          </rows>
-        </grid>
-      </groupbox>
+              <rows>
+                <row align="center">
+                  <hbox pack="end">
+                    <label value="&localeCompareOptions.localeMatcher.label;" />
+                  </hbox>
+                  <radiogroup preference="sbnt_pref_lco_localeMatcher">
+                    <hbox>
+                      <radio label="&localeMatcher.lookup.label;"
+                             value="lookup" />
+                      <radio label="&localeMatcher.bestfit.label;"
+                             value="best fit"
+                             tooltiptext="&defaultOption.tooltip;" />
+                    </hbox>
+                  </radiogroup>
+                </row>
+                <row align="center">
+                  <hbox pack="end">
+                    <label value="&localeCompareOptions.usage.label;" />
+                  </hbox>
+                  <radiogroup preference="sbnt_pref_lco_usage">
+                    <hbox>
+                      <radio label="&usage.sort.label;"
+                             value="sort"
+                             tooltiptext="&defaultOption.tooltip;" />
+                      <radio label="&usage.search.label;"
+                             value="search" />
+                    </hbox>
+                  </radiogroup>
+                </row>
+                <row align="center">
+                  <hbox pack="end">
+                    <label value="&localeCompareOptions.sensitivity.label;" />
+                  </hbox>
+                  <radiogroup preference="sbnt_pref_lco_sensitivity">
+                    <hbox>
+                      <radio label="&sensitivity.base.label;"
+                             value="base" />
+                      <radio label="&sensitivity.accent.label;"
+                             value="accent" />
+                      <radio label="&sensitivity.case.label;"
+                             value="case" />
+                      <radio label="&sensitivity.variant.label;"
+                             value="variant"
+                             tooltiptext="&defaultOption.tooltip;" />
+                    </hbox>
+                  </radiogroup>
+                </row>
+                <row align="center">
+                  <hbox pack="end">
+                    <label value="&localeCompareOptions.ignorePunctuation.label;" />
+                  </hbox>
+                  <radiogroup preference="sbnt_pref_lco_ignorePunctuation">
+                    <hbox>
+                      <radio label="&ignorePunctuation.true.label;"
+                             value="true" />
+                      <radio label="&ignorePunctuation.false.label;"
+                             value="false"
+                             tooltiptext="&defaultOption.tooltip;" />
+                    </hbox>
+                  </radiogroup>
+                </row>
+                <row align="center">
+                  <hbox pack="end">
+                    <label value="&localeCompareOptions.numeric.label;" />
+                  </hbox>
+                  <radiogroup preference="sbnt_pref_lco_numeric">
+                    <hbox>
+                      <radio label="&numeric.true.label;"
+                             value="true" />
+                      <radio label="&numeric.false.label;"
+                             value="false"
+                             tooltiptext="&defaultOption.tooltip;" />
+                    </hbox>
+                  </radiogroup>
+                </row>
+                <row align="center">
+                  <hbox pack="end">
+                    <label value="&localeCompareOptions.caseFirst.label;" />
+                  </hbox>
+                  <radiogroup preference="sbnt_pref_lco_caseFirst">
+                    <hbox>
+                      <radio label="&caseFirst.upper.label;"
+                             value="upper" />
+                      <radio label="&caseFirst.lower.label;"
+                             value="lower" />
+                      <radio label="&caseFirst.false.label;"
+                             value="false"
+                             tooltiptext="&defaultOption.tooltip;" />
+                    </hbox>
+                  </radiogroup>
+                </row>
+              </rows>
+            </grid>
+          </groupbox>
 
-      <groupbox>
-        <caption label="&testLocales.label;" />
+          <groupbox>
+            <caption label="&testLocales.label;" />
 
-        <grid>
-          <columns>
-            <column />
-          </columns>
+            <grid>
+              <columns>
+                <column />
+              </columns>
 
-          <rows>
-            <row align="center">
-              <textbox id="sbnt_testStrings"
-                       preference="sbnt_pref_testStrings"
-                       multiline="true"
-                       rows="9"
-                       wrap="off" />
-              <label value="=&gt;" />
-              <textbox id="sbnt_testStringsResult"
-                       multiline="true"
-                       rows="9"
-                       wrap="off"
-                       readonly="true" />
-            </row>
-          </rows>
-        </grid>
-      </groupbox>
+              <rows>
+                <row align="center">
+                  <textbox id="sbnt_testStrings"
+                           preference="sbnt_pref_testStrings"
+                           multiline="true"
+                           rows="9"
+                           wrap="off" />
+                  <label value="=&gt;" />
+                  <textbox id="sbnt_testStringsResult"
+                           multiline="true"
+                           rows="9"
+                           wrap="off"
+                           readonly="true" />
+                </row>
+              </rows>
+            </grid>
+          </groupbox>
 
-      <label class="text-link"
-             value="&moreAboutLocaleCompare.label;"
-             href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare"
-             onclick="gAdvancedPane.openTextLink(event);" />
-    </vbox>
+          <label class="text-link"
+                 value="&moreAboutLocaleCompare.label;"
+                 href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare"
+                 onclick="gAdvancedPane.openTextLink(event);" />
+        </tabpanel>
+      </tabpanels>
+    </tabbox>
   </prefpane>
 </prefwindow>
