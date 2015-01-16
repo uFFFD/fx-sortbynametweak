@@ -5,9 +5,7 @@
 <prefwindow id="sortbynametweakPref"
             title="&prefsTitle.label;"
             onload="sbntOptions.init();"
-            buttons="accept,cancel,extra1"
-            buttonlabelextra1="&reset.label;"
-            ondialogextra1="sbntOptions.reset();"
+            buttons="accept,cancel"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/javascript"
@@ -32,6 +30,30 @@
                   name="extensions.sortbynametweak@uFFFD.customLocales"
                   onchange="sbntOptions.onchange(event);"
                   type="unichar" />
+      <preference id="sbnt_pref_use_lco_localeMatcher"
+                  name="extensions.sortbynametweak@uFFFD.use_localeCompareOptions_localeMatcher"
+                  onchange="sbntOptions.onchange(event);"
+                  type="bool" />
+      <preference id="sbnt_pref_use_lco_usage"
+                  name="extensions.sortbynametweak@uFFFD.use_localeCompareOptions_usage"
+                  onchange="sbntOptions.onchange(event);"
+                  type="bool" />
+      <preference id="sbnt_pref_use_lco_sensitivity"
+                  name="extensions.sortbynametweak@uFFFD.use_localeCompareOptions_sensitivity"
+                  onchange="sbntOptions.onchange(event);"
+                  type="bool" />
+      <preference id="sbnt_pref_use_lco_ignorePunctuation"
+                  name="extensions.sortbynametweak@uFFFD.use_localeCompareOptions_ignorePunctuation"
+                  onchange="sbntOptions.onchange(event);"
+                  type="bool" />
+      <preference id="sbnt_pref_use_lco_numeric"
+                  name="extensions.sortbynametweak@uFFFD.use_localeCompareOptions_numeric"
+                  onchange="sbntOptions.onchange(event);"
+                  type="bool" />
+      <preference id="sbnt_pref_use_lco_caseFirst"
+                  name="extensions.sortbynametweak@uFFFD.use_localeCompareOptions_caseFirst"
+                  onchange="sbntOptions.onchange(event);"
+                  type="bool" />
       <preference id="sbnt_pref_lco_localeMatcher"
                   name="extensions.sortbynametweak@uFFFD.localeCompareOptions_localeMatcher"
                   onchange="sbntOptions.onchange(event);"
@@ -124,10 +146,12 @@
 
               <rows>
                 <row align="center">
-                  <hbox pack="end">
-                    <label value="&localeCompareOptions.localeMatcher.label;" />
+                  <hbox>
+                    <checkbox label="&localeCompareOptions.localeMatcher.label;"
+                              preference="sbnt_pref_use_lco_localeMatcher" />
                   </hbox>
-                  <radiogroup preference="sbnt_pref_lco_localeMatcher">
+                  <radiogroup id="sbnt_lco_localeMatcher"
+                              preference="sbnt_pref_lco_localeMatcher">
                     <hbox>
                       <radio label="&localeMatcher.lookup.label;"
                              value="lookup" />
@@ -138,10 +162,12 @@
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox pack="end">
-                    <label value="&localeCompareOptions.usage.label;" />
+                  <hbox>
+                    <checkbox label="&localeCompareOptions.usage.label;"
+                              preference="sbnt_pref_use_lco_usage" />
                   </hbox>
-                  <radiogroup preference="sbnt_pref_lco_usage">
+                  <radiogroup id="sbnt_lco_usage"
+                              preference="sbnt_pref_lco_usage">
                     <hbox>
                       <radio label="&usage.sort.label;"
                              value="sort"
@@ -152,10 +178,12 @@
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox pack="end">
-                    <label value="&localeCompareOptions.sensitivity.label;" />
+                  <hbox>
+                    <checkbox label="&localeCompareOptions.sensitivity.label;"
+                              preference="sbnt_pref_use_lco_sensitivity" />
                   </hbox>
-                  <radiogroup preference="sbnt_pref_lco_sensitivity">
+                  <radiogroup id="sbnt_lco_sensitivity"
+                              preference="sbnt_pref_lco_sensitivity">
                     <hbox>
                       <radio label="&sensitivity.base.label;"
                              value="base" />
@@ -170,10 +198,12 @@
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox pack="end">
-                    <label value="&localeCompareOptions.ignorePunctuation.label;" />
+                  <hbox>
+                    <checkbox label="&localeCompareOptions.ignorePunctuation.label;"
+                              preference="sbnt_pref_use_lco_ignorePunctuation" />
                   </hbox>
-                  <radiogroup preference="sbnt_pref_lco_ignorePunctuation">
+                  <radiogroup id="sbnt_lco_ignorePunctuation"
+                              preference="sbnt_pref_lco_ignorePunctuation">
                     <hbox>
                       <radio label="&ignorePunctuation.true.label;"
                              value="true" />
@@ -184,10 +214,12 @@
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox pack="end">
-                    <label value="&localeCompareOptions.numeric.label;" />
+                  <hbox>
+                    <checkbox label="&localeCompareOptions.numeric.label;"
+                              preference="sbnt_pref_use_lco_numeric" />
                   </hbox>
-                  <radiogroup preference="sbnt_pref_lco_numeric">
+                  <radiogroup id="sbnt_lco_numeric"
+                              preference="sbnt_pref_lco_numeric">
                     <hbox>
                       <radio label="&numeric.true.label;"
                              value="true" />
@@ -198,10 +230,12 @@
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox pack="end">
-                    <label value="&localeCompareOptions.caseFirst.label;" />
+                  <hbox>
+                    <checkbox label="&localeCompareOptions.caseFirst.label;"
+                              preference="sbnt_pref_use_lco_caseFirst" />
                   </hbox>
-                  <radiogroup preference="sbnt_pref_lco_caseFirst">
+                  <radiogroup id="sbnt_lco_caseFirst"
+                              preference="sbnt_pref_lco_caseFirst">
                     <hbox>
                       <radio label="&caseFirst.upper.label;"
                              value="upper" />
@@ -243,10 +277,15 @@
             </grid>
           </groupbox>
 
-          <label class="text-link"
-                 value="&moreAboutLocaleCompare.label;"
-                 href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare"
-                 onclick="gAdvancedPane.openTextLink(event);" />
+          <hbox align="center">
+            <label class="text-link"
+                   value="&moreAboutLocaleCompare.label;"
+                   href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare"
+                   onclick="gAdvancedPane.openTextLink(event);" />
+            <spacer flex="1" />
+            <button label="&reset.label;"
+                    onclick="sbntOptions.reset();" />
+          </hbox>
         </tabpanel>
       </tabpanels>
     </tabbox>

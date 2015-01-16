@@ -1,5 +1,11 @@
 pref("extensions.sortbynametweak@uFFFD.useFirefoxLocale", true);
 pref("extensions.sortbynametweak@uFFFD.customLocales", "");
+pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_localeMatcher", true);
+pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_usage", true);
+pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_sensitivity", true);
+pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_ignorePunctuation", true);
+pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_numeric", true);
+pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_caseFirst", true);
 pref("extensions.sortbynametweak@uFFFD.localeCompareOptions_localeMatcher", "best fit");
 pref("extensions.sortbynametweak@uFFFD.localeCompareOptions_usage", "sort");
 pref("extensions.sortbynametweak@uFFFD.localeCompareOptions_sensitivity", "variant");

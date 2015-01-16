@@ -37,6 +37,13 @@ const sbntOptions = {
   init: function() {
     this._useFirefoxLocale = $("sbnt_pref_useFirefoxLocale").value;
     this.checkLocales();
+    this._included_options = {};
+    this._included_options["localeMatcher"] = $("sbnt_pref_use_lco_localeMatcher").value;
+    this._included_options["usage"] = $("sbnt_pref_use_lco_usage").value;
+    this._included_options["sensitivity"] = $("sbnt_pref_use_lco_sensitivity").value;
+    this._included_options["ignorePunctuation"] = $("sbnt_pref_use_lco_ignorePunctuation").value;
+    this._included_options["numeric"] = $("sbnt_pref_use_lco_numeric").value;
+    this._included_options["caseFirst"] = $("sbnt_pref_use_lco_caseFirst").value;
     this._options = {};
     this._options["localeMatcher"] = $("sbnt_pref_lco_localeMatcher").value;
     this._options["usage"] = $("sbnt_pref_lco_usage").value;
@@ -45,6 +52,12 @@ const sbntOptions = {
     this._options["numeric"] = $("sbnt_pref_lco_numeric").value;
     this._options["caseFirst"] = $("sbnt_pref_lco_caseFirst").value;
     this._testStrings = $("sbnt_pref_testStrings").value;
+    $("sbnt_lco_localeMatcher").disabled = !this._included_options["localeMatcher"];
+    $("sbnt_lco_usage").disabled = !this._included_options["usage"];
+    $("sbnt_lco_sensitivity").disabled = !this._included_options["sensitivity"];
+    $("sbnt_lco_ignorePunctuation").disabled = !this._included_options["ignorePunctuation"];
+    $("sbnt_lco_numeric").disabled = !this._included_options["numeric"];
+    $("sbnt_lco_caseFirst").disabled = !this._included_options["caseFirst"];
     this.testLocales();
   },
 
@@ -83,7 +96,13 @@ const sbntOptions = {
 
   testLocales: function() {
     if (this._localesSupported) {
-      $("sbnt_testStringsResult").value = sort(this._testStrings, "\n", this._locales, this._options);
+      let options = {};
+      ["localeMatcher", "usage", "sensitivity", "ignorePunctuation", "numeric", "caseFirst"].forEach(e => {
+        if (this._included_options[e]) {
+          options[e] = this._options[e];
+        }
+      });
+      $("sbnt_testStringsResult").value = sort(this._testStrings, "\n", this._locales, options);
     }
     else {
       $("sbnt_testStringsResult").value = "";
@@ -92,6 +111,12 @@ const sbntOptions = {
 
   reset: function() {
     const prefs_ids = [
+      "sbnt_pref_use_lco_localeMatcher",
+      "sbnt_pref_use_lco_usage",
+      "sbnt_pref_use_lco_sensitivity",
+      "sbnt_pref_use_lco_ignorePunctuation",
+      "sbnt_pref_use_lco_numeric",
+      "sbnt_pref_use_lco_caseFirst",
       "sbnt_pref_lco_localeMatcher",
       "sbnt_pref_lco_usage",
       "sbnt_pref_lco_sensitivity",
@@ -115,6 +140,30 @@ const sbntOptions = {
       case "general_useragent_locale":
       case "sbnt_pref_customLocales":
         this.checkLocales();
+        break;
+      case "sbnt_pref_use_lco_localeMatcher":
+        this._included_options["localeMatcher"] = $(id).value;
+        $("sbnt_lco_localeMatcher").disabled = !this._included_options["localeMatcher"];
+        break;
+      case "sbnt_pref_use_lco_usage":
+        this._included_options["usage"] = $(id).value;
+        $("sbnt_lco_usage").disabled = !this._included_options["usage"];
+        break;
+      case "sbnt_pref_use_lco_sensitivity":
+        this._included_options["sensitivity"] = $(id).value;
+        $("sbnt_lco_sensitivity").disabled = !this._included_options["sensitivity"];
+        break;
+      case "sbnt_pref_use_lco_ignorePunctuation":
+        this._included_options["ignorePunctuation"] = $(id).value;
+        $("sbnt_lco_ignorePunctuation").disabled = !this._included_options["ignorePunctuation"];
+        break;
+      case "sbnt_pref_use_lco_numeric":
+        this._included_options["numeric"] = $(id).value;
+        $("sbnt_lco_numeric").disabled = !this._included_options["numeric"];
+        break;
+      case "sbnt_pref_use_lco_caseFirst":
+        this._included_options["caseFirst"] = $(id).value;
+        $("sbnt_lco_caseFirst").disabled = !this._included_options["caseFirst"];
         break;
       case "sbnt_pref_lco_localeMatcher":
         this._options["localeMatcher"] = $(id).value;

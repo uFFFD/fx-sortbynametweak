@@ -51,6 +51,24 @@ let sortbynametweak = {
         case "extensions.sortbynametweak@uFFFD.customLocales":
           this.settings.customLocales = this.getUCharPref("extensions.sortbynametweak@uFFFD.customLocales", "");
           break;
+        case "extensions.sortbynametweak@uFFFD.use_localeCompareOptions_localeMatcher":
+          this.settings.included_options.localeMatcher = this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_localeMatcher", true);
+          break;
+        case "extensions.sortbynametweak@uFFFD.use_localeCompareOptions_usage":
+          this.settings.included_options.usage = this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_usage", true);
+          break;
+        case "extensions.sortbynametweak@uFFFD.use_localeCompareOptions_sensitivity":
+          this.settings.included_options.sensitivity = this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_sensitivity", true);
+          break;
+        case "extensions.sortbynametweak@uFFFD.use_localeCompareOptions_ignorePunctuation":
+          this.settings.included_options.ignorePunctuation = this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_ignorePunctuation", true);
+          break;
+        case "extensions.sortbynametweak@uFFFD.use_localeCompareOptions_numeric":
+          this.settings.included_options.numeric = this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_numeric", true);
+          break;
+        case "extensions.sortbynametweak@uFFFD.use_localeCompareOptions_caseFirst":
+          this.settings.included_options.caseFirst = this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_caseFirst", true);
+          break;
         case "extensions.sortbynametweak@uFFFD.localeCompareOptions_localeMatcher":
           this.settings.options.localeMatcher = this.getUCharPref("extensions.sortbynametweak@uFFFD.localeCompareOptions_localeMatcher", "best fit");
           break;
@@ -133,6 +151,14 @@ let sortbynametweak = {
       firefoxLocale: this.getFirefoxLocale(),
       useFirefoxLocale: this.getBoolPref("extensions.sortbynametweak@uFFFD.useFirefoxLocale", true),
       customLocales: this.getUCharPref("extensions.sortbynametweak@uFFFD.customLocales", ""),
+      included_options: {
+        localeMatcher: this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_localeMatcher", true),
+        usage: this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_usage", true),
+        sensitivity: this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_sensitivity", true),
+        ignorePunctuation: this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_ignorePunctuation", true),
+        numeric: this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_numeric", true),
+        caseFirst: this.getBoolPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_caseFirst", true)
+      },
       options: {
         localeMatcher: this.getUCharPref("extensions.sortbynametweak@uFFFD.localeCompareOptions_localeMatcher", "best fit"),
         usage: this.getUCharPref("extensions.sortbynametweak@uFFFD.localeCompareOptions_usage", "sort"),
@@ -259,7 +285,13 @@ let sortbynametweak = {
       alert(this.strings.formatStringFromName("message.invalidLanguageTag", [ locales !== "" ? locales : "Empty string" ], 1));
       return;
     }
-    const txn = new SBNTSortFolderByNameTransaction(itemId, SBNTPlacesUtils.SORT_BY_LOCALES, locales, this.settings.options);
+    let options = {};
+    ["localeMatcher", "usage", "sensitivity", "ignorePunctuation", "numeric", "caseFirst"].forEach(e => {
+      if (this.settings.included_options[e]) {
+        options[e] = this.settings.options[e];
+      }
+    });
+    const txn = new SBNTSortFolderByNameTransaction(itemId, SBNTPlacesUtils.SORT_BY_LOCALES, locales, options);
     PlacesUtils.transactionManager.doTransaction(txn);
   },
 
