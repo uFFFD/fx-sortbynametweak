@@ -25,7 +25,7 @@
 <!ENTITY caseFirst.upper.label                          "大写">
 <!ENTITY caseFirst.lower.label                          "小写">
 <!ENTITY caseFirst.false.label                          "否">
-<!ENTITY testLocales.label                              "测试">
+<!ENTITY testLocales.label                              "localeCompare 测试">
 <!ENTITY moreAboutLocaleCompare.label                   "更多关于 String.prototype.localeCompare()">
 <!ENTITY customLocales.tooltip                          "区域设置或者逗号分隔的区域列表">
 <!ENTITY defaultOption.tooltip                          "默认">

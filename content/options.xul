@@ -146,105 +146,87 @@
 
               <rows>
                 <row align="center">
-                  <hbox>
-                    <checkbox label="&localeCompareOptions.localeMatcher.label;"
-                              preference="sbnt_pref_use_lco_localeMatcher" />
-                  </hbox>
+                  <checkbox label="&localeCompareOptions.localeMatcher.label;"
+                            preference="sbnt_pref_use_lco_localeMatcher" />
                   <radiogroup id="sbnt_lco_localeMatcher"
-                              preference="sbnt_pref_lco_localeMatcher">
-                    <hbox>
-                      <radio label="&localeMatcher.lookup.label;"
-                             value="lookup" />
-                      <radio label="&localeMatcher.bestfit.label;"
-                             value="best fit"
-                             tooltiptext="&defaultOption.tooltip;" />
-                    </hbox>
+                              preference="sbnt_pref_lco_localeMatcher"
+                              orient="horizontal">
+                    <radio label="&localeMatcher.lookup.label;"
+                           value="lookup" />
+                    <radio label="&localeMatcher.bestfit.label;"
+                           value="best fit"
+                           tooltiptext="&defaultOption.tooltip;" />
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox>
-                    <checkbox label="&localeCompareOptions.usage.label;"
-                              preference="sbnt_pref_use_lco_usage" />
-                  </hbox>
+                  <checkbox label="&localeCompareOptions.usage.label;"
+                            preference="sbnt_pref_use_lco_usage" />
                   <radiogroup id="sbnt_lco_usage"
-                              preference="sbnt_pref_lco_usage">
-                    <hbox>
-                      <radio label="&usage.sort.label;"
-                             value="sort"
-                             tooltiptext="&defaultOption.tooltip;" />
-                      <radio label="&usage.search.label;"
-                             value="search" />
-                    </hbox>
+                              preference="sbnt_pref_lco_usage"
+                              orient="horizontal">
+                    <radio label="&usage.sort.label;"
+                           value="sort"
+                           tooltiptext="&defaultOption.tooltip;" />
+                    <radio label="&usage.search.label;"
+                           value="search" />
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox>
-                    <checkbox label="&localeCompareOptions.sensitivity.label;"
-                              preference="sbnt_pref_use_lco_sensitivity" />
-                  </hbox>
+                  <checkbox label="&localeCompareOptions.sensitivity.label;"
+                            preference="sbnt_pref_use_lco_sensitivity" />
                   <radiogroup id="sbnt_lco_sensitivity"
-                              preference="sbnt_pref_lco_sensitivity">
-                    <hbox>
-                      <radio label="&sensitivity.base.label;"
-                             value="base" />
-                      <radio label="&sensitivity.accent.label;"
-                             value="accent" />
-                      <radio label="&sensitivity.case.label;"
-                             value="case" />
-                      <radio label="&sensitivity.variant.label;"
-                             value="variant"
-                             tooltiptext="&defaultOption.tooltip;" />
-                    </hbox>
+                              preference="sbnt_pref_lco_sensitivity"
+                              orient="horizontal">
+                    <radio label="&sensitivity.base.label;"
+                           value="base" />
+                    <radio label="&sensitivity.accent.label;"
+                           value="accent" />
+                    <radio label="&sensitivity.case.label;"
+                           value="case" />
+                    <radio label="&sensitivity.variant.label;"
+                           value="variant"
+                           tooltiptext="&defaultOption.tooltip;" />
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox>
-                    <checkbox label="&localeCompareOptions.ignorePunctuation.label;"
-                              preference="sbnt_pref_use_lco_ignorePunctuation" />
-                  </hbox>
+                  <checkbox label="&localeCompareOptions.ignorePunctuation.label;"
+                            preference="sbnt_pref_use_lco_ignorePunctuation" />
                   <radiogroup id="sbnt_lco_ignorePunctuation"
-                              preference="sbnt_pref_lco_ignorePunctuation">
-                    <hbox>
-                      <radio label="&ignorePunctuation.true.label;"
-                             value="true" />
-                      <radio label="&ignorePunctuation.false.label;"
-                             value="false"
-                             tooltiptext="&defaultOption.tooltip;" />
-                    </hbox>
+                              preference="sbnt_pref_lco_ignorePunctuation"
+                              orient="horizontal">
+                    <radio label="&ignorePunctuation.true.label;"
+                           value="true" />
+                    <radio label="&ignorePunctuation.false.label;"
+                           value="false"
+                           tooltiptext="&defaultOption.tooltip;" />
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox>
-                    <checkbox label="&localeCompareOptions.numeric.label;"
-                              preference="sbnt_pref_use_lco_numeric" />
-                  </hbox>
+                  <checkbox label="&localeCompareOptions.numeric.label;"
+                            preference="sbnt_pref_use_lco_numeric" />
                   <radiogroup id="sbnt_lco_numeric"
-                              preference="sbnt_pref_lco_numeric">
-                    <hbox>
-                      <radio label="&numeric.true.label;"
-                             value="true" />
-                      <radio label="&numeric.false.label;"
-                             value="false"
-                             tooltiptext="&defaultOption.tooltip;" />
-                    </hbox>
+                              preference="sbnt_pref_lco_numeric"
+                              orient="horizontal">
+                    <radio label="&numeric.true.label;"
+                           value="true" />
+                    <radio label="&numeric.false.label;"
+                           value="false"
+                           tooltiptext="&defaultOption.tooltip;" />
                   </radiogroup>
                 </row>
                 <row align="center">
-                  <hbox>
-                    <checkbox label="&localeCompareOptions.caseFirst.label;"
-                              preference="sbnt_pref_use_lco_caseFirst" />
-                  </hbox>
+                  <checkbox label="&localeCompareOptions.caseFirst.label;"
+                            preference="sbnt_pref_use_lco_caseFirst" />
                   <radiogroup id="sbnt_lco_caseFirst"
-                              preference="sbnt_pref_lco_caseFirst">
-                    <hbox>
-                      <radio label="&caseFirst.upper.label;"
-                             value="upper" />
-                      <radio label="&caseFirst.lower.label;"
-                             value="lower" />
-                      <radio label="&caseFirst.false.label;"
-                             value="false"
-                             tooltiptext="&defaultOption.tooltip;" />
-                    </hbox>
+                              preference="sbnt_pref_lco_caseFirst"
+                              orient="horizontal">
+                    <radio label="&caseFirst.upper.label;"
+                           value="upper" />
+                    <radio label="&caseFirst.lower.label;"
+                           value="lower" />
+                    <radio label="&caseFirst.false.label;"
+                           value="false"
+                           tooltiptext="&defaultOption.tooltip;" />
                   </radiogroup>
                 </row>
               </rows>
@@ -253,28 +235,21 @@
 
           <groupbox>
             <caption label="&testLocales.label;" />
-
-            <grid>
-              <columns>
-                <column />
-              </columns>
-
-              <rows>
-                <row align="center">
-                  <textbox id="sbnt_testStrings"
-                           preference="sbnt_pref_testStrings"
-                           multiline="true"
-                           rows="9"
-                           wrap="off" />
-                  <label value="=&gt;" />
-                  <textbox id="sbnt_testStringsResult"
-                           multiline="true"
-                           rows="9"
-                           wrap="off"
-                           readonly="true" />
-                </row>
-              </rows>
-            </grid>
+            <hbox align="center">
+              <textbox id="sbnt_testStrings"
+                       preference="sbnt_pref_testStrings"
+                       multiline="true"
+                       rows="9"
+                       wrap="off"
+                       flex="1" />
+              <label value="=&gt;" />
+              <textbox id="sbnt_testStringsResult"
+                       multiline="true"
+                       rows="9"
+                       wrap="off"
+                       flex="1"
+                       readonly="true" />
+            </hbox>
           </groupbox>
 
           <hbox align="center">

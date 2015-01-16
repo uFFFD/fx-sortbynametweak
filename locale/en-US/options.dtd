@@ -25,7 +25,7 @@
 <!ENTITY caseFirst.upper.label                          "upper">
 <!ENTITY caseFirst.lower.label                          "lower">
 <!ENTITY caseFirst.false.label                          "false">
-<!ENTITY testLocales.label                              "Test">
+<!ENTITY testLocales.label                              "localeCompare test">
 <!ENTITY moreAboutLocaleCompare.label                   "Learn more about String.prototype.localeCompare()">
 <!ENTITY customLocales.tooltip                          "Locale or comma-separated list of locales">
 <!ENTITY defaultOption.tooltip                          "default">
