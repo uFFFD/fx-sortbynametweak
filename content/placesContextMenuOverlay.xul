@@ -18,12 +18,14 @@
   <menupopup id="placesContext">
     <menuitem id="sortbynametweak_sortByLocales"
               label="&cmd.sortbylocales.label;"
+              value="&cmd.sortbylocales.label;"
               selection="folder"
               closemenu="single"
               command="sortbynametweakCmd_sortByLocales"
               insertbefore="placesContext_sortSeparator" />
     <menuitem id="sortbynametweak_sortBySQL"
               label="&cmd.sortbysql.label;"
+              value="&cmd.sortbysql.label;"
               selection="folder"
               closemenu="single"
               command="sortbynametweakCmd_sortBySQL"

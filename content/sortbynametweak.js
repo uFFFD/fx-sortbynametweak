@@ -46,6 +46,10 @@ let sortbynametweak = {
   observe: function(subject, topic, data) {
     if (topic == "nsPref:changed") {
       switch (data) {
+        case "extensions.sortbynametweak@uFFFD.showPlacesContextMenu":
+          this.settings.showPlacesCM = this.getPref(data);
+          this.updatePlacesContextMenu();
+          break;
         case "general.useragent.locale":
           this.settings.firefoxLocale = this.getFirefoxLocale();
           break;
@@ -139,6 +143,8 @@ let sortbynametweak = {
 
   getPref: function(prefName) {
     switch (prefName) {
+      case "extensions.sortbynametweak@uFFFD.showPlacesContextMenu":
+        return this.getIntPref(prefName, 0);
       case "extensions.sortbynametweak@uFFFD.useFirefoxLocale":
         return this.getBoolPref(prefName, true);
       case "extensions.sortbynametweak@uFFFD.customLocales":
@@ -182,6 +188,7 @@ let sortbynametweak = {
       return Services.strings.createBundle("chrome://sortbynametweak/locale/sortbynametweak.properties");
     });
     this.settings = {
+      showPlacesCM: this.getPref("extensions.sortbynametweak@uFFFD.showPlacesContextMenu"),
       firefoxLocale: this.getFirefoxLocale(),
       useFirefoxLocale: this.getPref("extensions.sortbynametweak@uFFFD.useFirefoxLocale"),
       customLocales: this.getPref("extensions.sortbynametweak@uFFFD.customLocales"),
@@ -192,6 +199,7 @@ let sortbynametweak = {
       this.settings.included_options[e] = this.getPref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_" + e);
       this.settings.options[e] = this.getPref("extensions.sortbynametweak@uFFFD.localeCompareOptions_" + e);
     });
+    this.updatePlacesContextMenu();
     Services.prefs.addObserver("extensions.sortbynametweak@uFFFD.", this, false);
     Services.prefs.addObserver("general.useragent.locale", this, false);
     document.getElementById("placesContext").addEventListener("popupshowing", this, false);
@@ -204,7 +212,56 @@ let sortbynametweak = {
     document.getElementById("placesContext").removeEventListener("popupshowing", this, false);
   },
 
+  updatePlacesContextMenu: function() {
+    const sortByName = document.getElementById("placesContext_sortBy:name");
+    const sortByLocales = document.getElementById("sortbynametweak_sortByLocales");
+    const sortBySQL = document.getElementById("sortbynametweak_sortBySQL");
+    if (sortByName && sortByLocales && sortBySQL) {
+      sortByLocales.setAttribute("label", sortByLocales.getAttribute("value"));
+      sortByLocales.removeAttribute("accesskey");
+      sortBySQL.setAttribute("label", sortBySQL.getAttribute("value"));
+      sortBySQL.removeAttribute("accesskey");
+      switch (this.settings.showPlacesCM) {
+        case 5: // replace sort by name with sort by locales
+          sortByLocales.setAttribute("label", sortByName.getAttribute("label"));
+          sortByLocales.setAttribute("accesskey", sortByName.getAttribute("accesskey"));
+          break;
+        case 6: // replace sort by name with sort by sql
+          sortBySQL.setAttribute("label", sortByName.getAttribute("label"));
+          sortBySQL.setAttribute("accesskey", sortByName.getAttribute("accesskey"));
+          break;
+        default:
+          break;
+      }
+    }
+  },
+
   popupshowing: function(evt) {
+    const sortByName = document.getElementById("placesContext_sortBy:name");
+    const sortByLocales = document.getElementById("sortbynametweak_sortByLocales");
+    const sortBySQL = document.getElementById("sortbynametweak_sortBySQL");
+    if (sortByName && sortByLocales && sortBySQL) {
+      switch (this.settings.showPlacesCM) {
+        case 1: // show sort by name and sort by locales
+          sortBySQL.setAttribute("hidden", "true");
+          break;
+        case 2: // show sort by name and sort by sql
+          sortByLocales.setAttribute("hidden", "true");
+          break;
+        case 3: // show sort by locales
+        case 5: // replace sort by name with sort by locales
+          sortByName.setAttribute("hidden", "true");
+          sortBySQL.setAttribute("hidden", "true");
+          break;
+        case 4: // show sort by sql
+        case 6: // replace sort by name with sort by sql
+          sortByName.setAttribute("hidden", "true");
+          sortByLocales.setAttribute("hidden", "true");
+          break;
+        default:
+          break;
+      }
+    }
     if (this.isCmdEnabled) {
       this.setMenuEnabled("sortbynametweak_sortByLocales", true);
       this.setMenuEnabled("sortbynametweak_sortBySQL", true);

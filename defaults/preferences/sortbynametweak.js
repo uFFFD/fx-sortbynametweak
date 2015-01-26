@@ -1,3 +1,4 @@
+pref("extensions.sortbynametweak@uFFFD.showPlacesContextMenu", 0);
 pref("extensions.sortbynametweak@uFFFD.useFirefoxLocale", true);
 pref("extensions.sortbynametweak@uFFFD.customLocales", "");
 pref("extensions.sortbynametweak@uFFFD.use_localeCompareOptions_localeMatcher", true);
