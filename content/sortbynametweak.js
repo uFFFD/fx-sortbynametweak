@@ -202,14 +202,20 @@ let sortbynametweak = {
     this.updatePlacesContextMenu();
     Services.prefs.addObserver("extensions.sortbynametweak@uFFFD.", this, false);
     Services.prefs.addObserver("general.useragent.locale", this, false);
-    document.getElementById("placesContext").addEventListener("popupshowing", this, false);
+    let placesCM = document.getElementById("placesContext");
+    if (placesCM) {
+      placesCM.addEventListener("popupshowing", this, false);
+    }
   },
 
   unload: function(evt) {
     window.removeEventListener("unload", this, false);
     Services.prefs.removeObserver("extensions.sortbynametweak@uFFFD.", this);
     Services.prefs.removeObserver("general.useragent.locale", this);
-    document.getElementById("placesContext").removeEventListener("popupshowing", this, false);
+    let placesCM = document.getElementById("placesContext");
+    if (placesCM) {
+      placesCM.removeEventListener("popupshowing", this, false);
+    }
   },
 
   updatePlacesContextMenu: function() {
