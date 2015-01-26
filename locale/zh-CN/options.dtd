@@ -1,4 +1,14 @@
 <!ENTITY prefsTitle.label                               "Sort By Name Tweak 选项">
+<!ENTITY generaltab.label                               "常规">
+<!ENTITY advancedtab.label                              "高级">
+<!ENTITY appearance.label                               "外观">
+<!ENTITY pcmShowAll.label                               "显示原始和基于 localeCompare、SQL 的“按名称排序”">
+<!ENTITY pcmShowOrigAndSortByLocaleCompare.label        "显示原始和基于 localeCompare 的“按名称排序”">
+<!ENTITY pcmShowOrigAndSortBySQL.label                  "显示原始和基于 SQL 的“按名称排序”">
+<!ENTITY pcmShowSortByLocaleCompareOnly.label           "只显示基于 localeCompare 的“按名称排序”">
+<!ENTITY pcmShowSortBySQLOnly.label                     "只显示基于 SQL 的“按名称排序”">
+<!ENTITY pcmReplaceOrigWithSortByLocaleCompare.label    "使用基于 localeCompare 的“按名称排序”替换原始的“按名称排序”">
+<!ENTITY pcmReplaceOrigWithSortBySQL.label              "使用基于 SQL 的“按名称排序”替换原始的“按名称排序”">
 <!ENTITY localeCompareLocales.label                     "localeCompare 区域设置">
 <!ENTITY useFirefoxLocale.label                         "Firefox">
 <!ENTITY useCustomLocales.label                         "自定义">

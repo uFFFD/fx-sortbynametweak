@@ -1,4 +1,14 @@
 <!ENTITY prefsTitle.label                               "Sort By Name Tweak Options">
+<!ENTITY generaltab.label                               "General">
+<!ENTITY advancedtab.label                              "Advanced">
+<!ENTITY appearance.label                               "Appearance">
+<!ENTITY pcmShowAll.label                               "Show original and localeCompare/SQL based &quot;Sort By Name&quot;">
+<!ENTITY pcmShowOrigAndSortByLocaleCompare.label        "Show original and localeCompare based &quot;Sort By Name&quot;">
+<!ENTITY pcmShowOrigAndSortBySQL.label                  "Show original and SQL based &quot;Sort By Name&quot;">
+<!ENTITY pcmShowSortByLocaleCompareOnly.label           "Show localeCompare based &quot;Sort By Name&quot; only">
+<!ENTITY pcmShowSortBySQLOnly.label                     "Show SQL based &quot;Sort By Name&quot; only">
+<!ENTITY pcmReplaceOrigWithSortByLocaleCompare.label    "Replace original &quot;Sort By Name&quot; with localeCompare based one">
+<!ENTITY pcmReplaceOrigWithSortBySQL.label              "Replace original &quot;Sort By Name&quot; with SQL based one">
 <!ENTITY localeCompareLocales.label                     "localeCompare locales">
 <!ENTITY useFirefoxLocale.label                         "Firefox">
 <!ENTITY useCustomLocales.label                         "Custom">

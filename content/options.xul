@@ -90,28 +90,28 @@
     <tabbox id="tablist" flex="1">
       <tabs>
         <tab id="general"
-             label="General" />
+             label="&generaltab.label;" />
         <tab id="advanced"
-             label="Advanced" />
+             label="&advancedtab.label;" />
       </tabs>
       <tabpanels flex="1">
         <tabpanel id="generaltab" orient="vertical">
           <groupbox id="appearance">
-            <caption label="Appearance" />
+            <caption label="&appearance.label;" />
             <radiogroup preference="sbnt_pref_showPlacesContextMenu">
-              <radio label="Show original and localeCompare/SQL based &quot;Sort By Name&quot;"
+              <radio label="&pcmShowAll.label;"
                      value="0" />
-              <radio label="Show original and localeCompare based &quot;Sort By Name&quot;"
+              <radio label="&pcmShowOrigAndSortByLocaleCompare.label;"
                      value="1" />
-              <radio label="Show original and SQL based &quot;Sort By Name&quot;"
+              <radio label="&pcmShowOrigAndSortBySQL.label;"
                      value="2" />
-              <radio label="Show localeCompare based &quot;Sort By Name&quot; only"
+              <radio label="&pcmShowSortByLocaleCompareOnly.label;"
                      value="3" />
-              <radio label="Show SQL based &quot;Sort By Name&quot; only"
+              <radio label="&pcmShowSortBySQLOnly.label;"
                      value="4" />
-              <radio label="Replace original &quot;Sort By Name&quot; with localeCompare based one"
+              <radio label="&pcmReplaceOrigWithSortByLocaleCompare.label;"
                      value="5" />
-              <radio label="Replace original &quot;Sort By Name&quot; with SQL based one"
+              <radio label="&pcmReplaceOrigWithSortBySQL.label;"
                      value="6" />
             </radiogroup>
           </groupbox>
