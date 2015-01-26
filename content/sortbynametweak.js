@@ -38,7 +38,7 @@ let sortbynametweak = {
         this.unload(evt);
         break;
       case "popupshowing":
-        this.popupshowing(evt);
+        this.onpopupshowing(evt);
         break;
     }
   },
@@ -242,7 +242,7 @@ let sortbynametweak = {
     }
   },
 
-  popupshowing: function(evt) {
+  onpopupshowing: function(evt) {
     const sortByName = document.getElementById("placesContext_sortBy:name");
     const sortByLocales = document.getElementById("sortbynametweak_sortByLocales");
     const sortBySQL = document.getElementById("sortbynametweak_sortBySQL");
