@@ -246,81 +246,69 @@ let sortbynametweak = {
     const sortByName = document.getElementById("placesContext_sortBy:name");
     const sortByLocales = document.getElementById("sortbynametweak_sortByLocales");
     const sortBySQL = document.getElementById("sortbynametweak_sortBySQL");
-    if (sortByName && sortByLocales && sortBySQL) {
-      switch (this.settings.showPlacesCM) {
-        case 1: // show sort by name and sort by locales
+    switch (this.settings.showPlacesCM) {
+      case 1: // show sort by name and sort by locales
+        if (sortBySQL) {
           sortBySQL.setAttribute("hidden", "true");
-          break;
-        case 2: // show sort by name and sort by sql
+        }
+        break;
+      case 2: // show sort by name and sort by sql
+        if (sortByLocales) {
           sortByLocales.setAttribute("hidden", "true");
-          break;
-        case 3: // show sort by locales
-        case 5: // replace sort by name with sort by locales
+        }
+        break;
+      case 3: // show sort by locales
+      case 5: // replace sort by name with sort by locales
+        if (sortByName) {
           sortByName.setAttribute("hidden", "true");
+        }
+        if (sortBySQL) {
           sortBySQL.setAttribute("hidden", "true");
-          break;
-        case 4: // show sort by sql
-        case 6: // replace sort by name with sort by sql
+        }
+        break;
+      case 4: // show sort by sql
+      case 6: // replace sort by name with sort by sql
+        if (sortBySQL) {
           sortByName.setAttribute("hidden", "true");
+        }
+        if (sortByLocales) {
           sortByLocales.setAttribute("hidden", "true");
-          break;
-        default:
-          break;
-      }
+        }
+        break;
+      default:
+        break;
     }
-    if (this.isCmdEnabled) {
-      this.setMenuEnabled("sortbynametweak_sortByLocales", true);
-      this.setMenuEnabled("sortbynametweak_sortBySQL", true);
-      goSetCommandEnabled("sortbynametweakCmd_sortByLocales", true);
-      goSetCommandEnabled("sortbynametweakCmd_sortBySQL", true);
-    }
-    else {
-      this.setMenuEnabled("sortbynametweak_sortByLocales", false);
-      this.setMenuEnabled("sortbynametweak_sortBySQL", false);
-      goSetCommandEnabled("sortbynametweakCmd_sortByLocales", false);
-      goSetCommandEnabled("sortbynametweakCmd_sortBySQL", false);
-    }
+    this.setMenuEnabled(this.isCmdEnabled);
   },
 
-  setMenuEnabled: function(id, status) {
-    if (status) {
-      document.getElementById(id).removeAttribute("disabled");
-    }
-    else {
-      document.getElementById(id).setAttribute("disabled", "true");
+  setMenuEnabled: function(enabled) {
+    [
+      "sortbynametweak_sortByLocales",
+      "sortbynametweak_sortBySQL",
+      "sortbynametweakCmd_sortByLocales",
+      "sortbynametweakCmd_sortBySQL"
+    ].forEach(e => this.setNodeEnabled(e, enabled));
+  },
+
+  setNodeEnabled: function(id, enabled) {
+    let node = document.getElementById(id);
+    if (node) {
+      if (enabled) {
+        node.removeAttribute("disabled");
+      }
+      else {
+        node.setAttribute("disabled", "true");
+      }
     }
   },
 
   get isCmdEnabled () {
-    if (Services.vc.compare(Services.appinfo.platformVersion, "35.*") > 0) {
-      // https://bugzilla.mozilla.org/show_bug.cgi?id=1068671
-      // they replaced PlacesUtils.nodeIsReadOnly with PlacesUIUtils.isContentsReadOnly
-      // and claimed that "DO NOT USE THIS API IN ADDONS."
-      // see http://hg.mozilla.org/mozilla-central/file/112e932d34a5/browser/components/places/PlacesUIUtils.jsm#l627
-      // so let's check if placesCmd_sortBy:name is enabled as a workaround
-      const placesCmd_sortBy_name = document.getElementById("placesCmd_sortBy:name");
-      if (placesCmd_sortBy_name) {
-        return !(placesCmd_sortBy_name.hasAttribute("disabled") && placesCmd_sortBy_name.getAttribute("disabled") == "true");
-      }
-      else {
-        return false; // or should it return true? I'm not sure
-      }
+    const placesCmd_sortBy_name = document.getElementById("placesCmd_sortBy:name");
+    if (placesCmd_sortBy_name) {
+      return !(placesCmd_sortBy_name.hasAttribute("disabled") && placesCmd_sortBy_name.getAttribute("disabled") == "true");
     }
     else {
-      // firefox 29~35
-      // chrome://browser/content/places/controller.js
-      if (PlacesUIUtils.useAsyncTransactions) {
-        return false;
-      }
-      const view = this.view;
-      if (!view) {
-        return false;
-      }
-      const selectedNode = view.selectedNode;
-      return selectedNode &&
-             PlacesUtils.nodeIsFolder(selectedNode) &&
-             !PlacesUtils.nodeIsReadOnly(selectedNode) &&
-             view.result.sortingMode == Ci.nsINavHistoryQueryOptions.SORT_BY_NONE;
+      return false;
     }
   },
 
