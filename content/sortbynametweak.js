@@ -19,10 +19,14 @@
 
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import("chrome://sortbynametweak/content/sbntPlacesUtils.js");
-Components.utils.import("chrome://sortbynametweak/content/sbntUtils.js");
 
 XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/devtools/Console.jsm");
+XPCOMUtils.defineLazyModuleGetter(this, "LocalesSupported",
+                                  "chrome://sortbynametweak/content/sbntUtils.js");
+XPCOMUtils.defineLazyModuleGetter(this, "SBNTPlacesUtils",
+                                  "chrome://sortbynametweak/content/sbntPlacesUtils.js");
+XPCOMUtils.defineLazyModuleGetter(this, "SBNTSortFolderByNameTransaction",
+                                  "chrome://sortbynametweak/content/sbntPlacesUtils.js");
 
 let sortbynametweak = {
   get optionList () {
