@@ -27,6 +27,8 @@ XPCOMUtils.defineLazyModuleGetter(this, "SBNTPlacesUtils",
                                   "chrome://sortbynametweak/content/sbntPlacesUtils.js");
 XPCOMUtils.defineLazyModuleGetter(this, "SBNTSortFolderByNameTransaction",
                                   "chrome://sortbynametweak/content/sbntPlacesUtils.js");
+XPCOMUtils.defineLazyModuleGetter(this, "SBNTPlacesTransactions",
+                                  "chrome://sortbynametweak/content/sbntPlacesTransactions.js");
 
 let sortbynametweak = {
   get optionList () {
@@ -342,6 +344,14 @@ let sortbynametweak = {
     return null;
   },
 
+  get usePromise () {
+    // Bug 983623 - Async transactions: Add a preference for turning it, implement undo & redo commands
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=983623
+    // Bug 984900 - Places async transactions: Implement "sort by name" ui command
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=984900
+    return Services.vc.compare(Services.appinfo.platformVersion, "30.*") > 0;
+  },
+
   sortByLocales: function() {
     const itemId = this.itemId;
     if (itemId === null) {
@@ -370,8 +380,30 @@ let sortbynametweak = {
         options[e] = this.settings.options[e];
       }
     });
+    if (this.usePromise) {
+      this.sortByLocalesPromised(itemId, locales, options)
+    }
+    else {
+      this.sortByLocalesLegacy(itemId, locales, options);
+    }
+  },
+
+  sortByLocalesLegacy: function(itemId, locales, options) {
     const txn = new SBNTSortFolderByNameTransaction(itemId, SBNTPlacesUtils.SORT_BY_LOCALES, locales, options);
     PlacesUtils.transactionManager.doTransaction(txn);
+  },
+
+  sortByLocalesPromised: function(itemId, locales, options) {
+    const that = this;
+    let task = Task.async(function* () {
+      if (!PlacesUIUtils.useAsyncTransactions) {
+        that.sortByLocalesLegacy(itemId, locales, options);
+        return;
+      }
+      let guid = yield PlacesUtils.promiseItemGuid(itemId);
+      yield SBNTPlacesTransactions.SortByLocales({ guid: guid, localeCompareLocales: locales, localeCompareOptions: options }).transact();
+    });
+    task().then(null, Components.utils.reportError);
   },
 
   sortBySQL: function() {
@@ -379,9 +411,31 @@ let sortbynametweak = {
     if (itemId === null) {
       return;
     }
+    if (this.usePromise) {
+      this.sortBySQLPromised(itemId)
+    }
+    else {
+      this.sortBySQLLegacy(itemId);
+    }
+  },
+
+  sortBySQLLegacy: function(itemId) {
     const txn = new SBNTSortFolderByNameTransaction(itemId, SBNTPlacesUtils.SORT_BY_SQL);
     PlacesUtils.transactionManager.doTransaction(txn);
   },
+
+  sortBySQLPromised: function(itemId) {
+    const that = this;
+    let task = Task.async(function* () {
+      if (!PlacesUIUtils.useAsyncTransactions) {
+        that.sortBySQLLegacy(itemId);
+        return;
+      }
+      let guid = yield PlacesUtils.promiseItemGuid(itemId);
+      yield SBNTPlacesTransactions.SortBySQL(guid).transact();
+    });
+    task().then(null, Components.utils.reportError);
+  }
 };
 
 window.addEventListener("load", sortbynametweak, false);

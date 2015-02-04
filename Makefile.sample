@@ -7,7 +7,10 @@ AURORA = path/to/aurora/$(FIREFOX)
 NIGHTLY = path/to/nightly/$(FIREFOX)
 
 LOCALE = en-US
-ARGS = --addon $(XPI) --preferences user.json --app-arg "-jsconsole" --pref "general.useragent.locale:$(LOCALE)"
+ASYNC = false
+ARGS = --addon $(XPI) --preferences user.json --app-arg "-jsconsole" \
+       --pref "general.useragent.locale:$(LOCALE)" \
+       --pref "browser.places.useAsyncTransactions:$(ASYNC)"
 
 xpi:
 	python xpi.py $(XPI) install.rdf chrome.manifest icon.png icon64.png content/ defaults/ locale/
