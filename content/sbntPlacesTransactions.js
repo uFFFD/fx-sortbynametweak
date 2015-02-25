@@ -733,9 +733,52 @@ DefineTransaction.defineArrayInputProp("excludingAnnotations",
                                        "excludingAnnotation");
 
 // added for SortByLocales
-DefineTransaction.stupidValidate = v => v;
-DefineTransaction.defineInputProps(["localeCompareLocales", "localeCompareOptions"],
-                                   DefineTransaction.stupidValidate, undefined);
+DefineTransaction.localeCompareLocalesValidate = locales => {
+  let localeCompareSupportsLocales = l => {
+    try {
+      "a".localeCompare("a", l);
+    }
+    catch (e) {
+      return e.name != "RangeError";
+    }
+    return true;
+  };
+  let validateF =
+    simpleValidateFunc(v => v === "undefined" ||
+                            ((typeof(v) == "string" ||
+                              (Array.isArray(v) &&
+                              v.every(e => typeof(e) == "string"))) &&
+                            localeCompareSupportsLocales(v)));
+  return validateF(locales);
+};
+DefineTransaction.defineInputProps(["localeCompareLocales"],
+                                   DefineTransaction.localeCompareLocalesValidate, undefined);
+
+DefineTransaction.localeCompareOptionsValidate = obj => {
+  let checkProperty = (aPropName, aRequired, aCheckFunc) => {
+    if (aPropName in obj)
+      return aCheckFunc(obj[aPropName]);
+    return !aRequired;
+  };
+
+  let inArray = (e, arr) => arr.indexOf(e) != -1;
+
+  if (obj &&
+      checkProperty("localeMatcher", false, v => inArray(v, [undefined, "lookup", "best fit"])) &&
+      checkProperty("usage", false, v => inArray(v, [undefined, "sort", "search"])) &&
+      checkProperty("sensitivity", false, v => inArray(v, [undefined, "base", "accent", "case", "variant"])) &&
+      checkProperty("ignorePunctuation", false, v => inArray(v, [undefined, true, false])) &&
+      checkProperty("numeric", false, v => inArray(v, [undefined, true, false])) &&
+      checkProperty("caseFirst", false, v => inArray(v, [undefined, "upper", "lower", "false"]))) {
+    // Nothing else should be set
+    let validKeys = ["localeMatcher", "usage", "sensitivity", "ignorePunctuation", "numeric", "caseFirst"];
+    if (Object.keys(obj).every( (k) => validKeys.indexOf(k) != -1 ))
+      return obj;
+  }
+  throw new Error("Invalid localeCompare options");
+};
+DefineTransaction.defineInputProps(["localeCompareOptions"],
+                                   DefineTransaction.localeCompareOptionsValidate, undefined);
 
 /*****************************************************************************
  * The SBNT Places Transactions.
