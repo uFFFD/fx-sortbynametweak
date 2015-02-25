@@ -257,7 +257,7 @@ SBNTSortFolderByNameTransaction.prototype.undoTransaction = function SFBNTXN_und
   let callback = {
     _self: this,
     runBatched: function() {
-      for (item in this._self._oldOrder)
+      for (let item in this._self._oldOrder)
         PlacesUtils.bookmarks.setItemIndex(item, this._self._oldOrder[item]);
     }
   };
