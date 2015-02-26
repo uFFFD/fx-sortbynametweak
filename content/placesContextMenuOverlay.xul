@@ -13,6 +13,8 @@
              oncommand="sortbynametweak.sortByLocales();" />
     <command id="sortbynametweakCmd_sortBySQL"
              oncommand="sortbynametweak.sortBySQL();" />
+    <command id="sortbynametweakCmd_sortByURL"
+             oncommand="sortbynametweak.sortByURL();" />
   </commandset>
 
   <menupopup id="placesContext">
@@ -29,6 +31,12 @@
               selection="folder"
               closemenu="single"
               command="sortbynametweakCmd_sortBySQL"
+              insertbefore="placesContext_sortSeparator" />
+    <menuitem id="sortbynametweak_sortByURL"
+              label="&cmd.sortbyurl.label;"
+              selection="folder"
+              closemenu="single"
+              command="sortbynametweakCmd_sortByURL"
               insertbefore="placesContext_sortSeparator" />
   </menupopup>
 </overlay>

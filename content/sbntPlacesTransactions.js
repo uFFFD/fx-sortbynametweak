@@ -943,3 +943,72 @@ SBNTPT.SortBySQL.prototype = {
     };
   }
 };
+
+/**
+ * Transaction for sorting a folder by location.
+ *
+ * Required Input Properties: guid
+ * Optional Input Properties: locales, options.
+ */
+SBNTPT.SortByURL = DefineTransaction(["guid"], ["localeCompareLocales", "localeCompareOptions"]);
+SBNTPT.SortByURL.prototype = {
+  execute: function* (aGuid, aLocales, aOptions) {
+    let itemId = yield PlacesUtils.promiseItemId(aGuid),
+        oldOrder = [],  // [itemId] = old index
+        contents = PlacesUtils.getFolderContents(itemId, false, false).root,
+        count = contents.childCount;
+
+    // Sort between separators.
+    let newOrder = [], // nodes, in the new order.
+        preSep   = []; // Temporary array for sorting each group of nodes.
+    let sortingMethod = (a, b) => {
+      if (PlacesUtils.nodeIsContainer(a) && !PlacesUtils.nodeIsContainer(b))
+        return -1;
+      if (!PlacesUtils.nodeIsContainer(a) && PlacesUtils.nodeIsContainer(b))
+        return 1;
+      return a.uri.localeCompare(b.uri, aLocales, aOptions);
+    };
+
+    for (let i = 0; i < count; ++i) {
+      let node = contents.getChild(i);
+      oldOrder[node.itemId] = i;
+      if (PlacesUtils.nodeIsSeparator(node)) {
+        if (preSep.length > 0) {
+          preSep.sort(sortingMethod);
+          newOrder = newOrder.concat(preSep);
+          preSep.splice(0, preSep.length);
+        }
+        newOrder.push(node);
+      }
+      else
+        preSep.push(node);
+    }
+    contents.containerOpen = false;
+
+    if (preSep.length > 0) {
+      preSep.sort(sortingMethod);
+      newOrder = newOrder.concat(preSep);
+    }
+
+    // Set the nex indexes.
+    let callback = {
+      runBatched: function() {
+        for (let i = 0; i < newOrder.length; ++i) {
+          PlacesUtils.bookmarks.setItemIndex(newOrder[i].itemId, i);
+        }
+      }
+    };
+    PlacesUtils.bookmarks.runInBatchMode(callback, null);
+
+    this.undo = () => {
+      let callback = {
+        runBatched: function() {
+          for (let item in oldOrder) {
+            PlacesUtils.bookmarks.setItemIndex(item, oldOrder[item]);
+          }
+        }
+      };
+      PlacesUtils.bookmarks.runInBatchMode(callback, null);
+    };
+  }
+};

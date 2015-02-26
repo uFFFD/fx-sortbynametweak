@@ -450,7 +450,61 @@ let sortbynametweak = {
       yield SBNTPlacesTransactions.SortBySQL(guid).transact();
     });
     task().then(null, Components.utils.reportError);
-  }
+  },
+
+  sortByURL: function() {
+    const itemId = this.itemId;
+    if (itemId === null) {
+      return;
+    }
+    let locales;
+    if (this.settings.useFirefoxLocale) {
+      locales = this.settings.firefoxLocale;
+    }
+    else {
+      locales = this.settings.customLocales;
+      if (locales.indexOf(",") >= 0) {
+        locales = locales.split(/\s*,\s*/);
+      }
+    }
+    if (locales === "") {
+      locales = undefined;
+    }
+    if (!LocalesSupported(locales)) {
+      alert(this.strings.formatStringFromName("message.invalidLanguageTag", [ locales !== "" ? locales : "Empty string" ], 1));
+      return;
+    }
+    let options = {};
+    this.optionList.forEach(e => {
+      if (this.settings.included_options[e]) {
+        options[e] = this.settings.options[e];
+      }
+    });
+    if (this.usePromise) {
+      this.sortByURLPromised(itemId, locales, options)
+    }
+    else {
+      this.sortByURLLegacy(itemId, locales, options);
+    }
+  },
+
+  sortByURLLegacy: function(itemId, locales, options) {
+    const txn = new SBNTSortFolderByNameTransaction(itemId, SBNTPlacesUtils.SORT_BY_URL, locales, options);
+    PlacesUtils.transactionManager.doTransaction(txn);
+  },
+
+  sortByURLPromised: function(itemId, locales, options) {
+    const that = this;
+    let task = Task.async(function* () {
+      if (!PlacesUIUtils.useAsyncTransactions) {
+        that.sortByURLLegacy(itemId, locales, options);
+        return;
+      }
+      let guid = yield that.promiseItemGuid(itemId);
+      yield SBNTPlacesTransactions.SortByURL({ guid: guid, localeCompareLocales: locales, localeCompareOptions: options }).transact();
+    });
+    task().then(null, Components.utils.reportError);
+  },
 };
 
 window.addEventListener("load", sortbynametweak, false);

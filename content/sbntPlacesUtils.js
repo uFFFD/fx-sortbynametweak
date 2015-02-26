@@ -35,6 +35,7 @@ this.EXPORTED_SYMBOLS = [
 this.SBNTPlacesUtils = {
   SORT_BY_LOCALES: 0,
   SORT_BY_SQL: 1,
+  SORT_BY_URL: 2,
 };
 
 const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
@@ -216,6 +217,8 @@ SBNTSortFolderByNameTransaction.prototype.doTransaction = function SFBNTXN_doTra
           return a.title.localeCompare(b.title, locales, options);
         case SBNTPlacesUtils.SORT_BY_SQL:
           return orderBySQL[a.itemId] - orderBySQL[b.itemId];
+        case SBNTPlacesUtils.SORT_BY_URL:
+          return a.uri.localeCompare(b.uri, locales, options);
         default:
           return a.title.localeCompare(b.title);
       }
