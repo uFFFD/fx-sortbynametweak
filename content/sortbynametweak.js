@@ -349,7 +349,22 @@ let sortbynametweak = {
     // https://bugzilla.mozilla.org/show_bug.cgi?id=983623
     // Bug 984900 - Places async transactions: Implement "sort by name" ui command
     // https://bugzilla.mozilla.org/show_bug.cgi?id=984900
-    return Services.vc.compare(Services.appinfo.platformVersion, "30.*") > 0;
+    //
+    // Only enable async transactions in firefox 34+
+    // because current async implement requires some new features added in firefox 34+
+    // e.g. ES6 Method Definitions, ES6 computed property names, ES6 template strings, etc...
+    // I'm too lazy too backport these to older versions
+    return Services.vc.compare(Services.appinfo.platformVersion, "33.*") > 0;
+  },
+
+  get promiseItemGuid () {
+    // workaround for firefox 34
+    // Bug 1069235 - make guid and parentGuid naming consistent
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1069235
+    if (Services.vc.compare(Services.appinfo.platformVersion, "34.*") > 0)
+      return PlacesUtils.promiseItemGuid;
+    else
+      return PlacesUtils.promiseItemGUID;
   },
 
   sortByLocales: function() {
@@ -400,7 +415,7 @@ let sortbynametweak = {
         that.sortByLocalesLegacy(itemId, locales, options);
         return;
       }
-      let guid = yield PlacesUtils.promiseItemGuid(itemId);
+      let guid = yield that.promiseItemGuid(itemId);
       yield SBNTPlacesTransactions.SortByLocales({ guid: guid, localeCompareLocales: locales, localeCompareOptions: options }).transact();
     });
     task().then(null, Components.utils.reportError);
@@ -431,7 +446,7 @@ let sortbynametweak = {
         that.sortBySQLLegacy(itemId);
         return;
       }
-      let guid = yield PlacesUtils.promiseItemGuid(itemId);
+      let guid = yield that.promiseItemGuid(itemId);
       yield SBNTPlacesTransactions.SortBySQL(guid).transact();
     });
     task().then(null, Components.utils.reportError);
