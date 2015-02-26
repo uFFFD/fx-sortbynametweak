@@ -367,11 +367,7 @@ let sortbynametweak = {
       return PlacesUtils.promiseItemGUID;
   },
 
-  sortByLocales: function() {
-    const itemId = this.itemId;
-    if (itemId === null) {
-      return;
-    }
+  getLocales: function() {
     let locales;
     if (this.settings.useFirefoxLocale) {
       locales = this.settings.firefoxLocale;
@@ -385,16 +381,30 @@ let sortbynametweak = {
     if (locales === "") {
       locales = undefined;
     }
-    if (!LocalesSupported(locales)) {
-      alert(this.strings.formatStringFromName("message.invalidLanguageTag", [ locales !== "" ? locales : "Empty string" ], 1));
-      return;
-    }
+    return locales;
+  },
+
+  getOptions: function() {
     let options = {};
     this.optionList.forEach(e => {
       if (this.settings.included_options[e]) {
         options[e] = this.settings.options[e];
       }
     });
+    return options;
+  },
+
+  sortByLocales: function() {
+    const itemId = this.itemId;
+    if (itemId === null) {
+      return;
+    }
+    let locales = this.getLocales();
+    if (!LocalesSupported(locales)) {
+      alert(this.strings.formatStringFromName("message.invalidLanguageTag", [ locales !== "" ? locales : "Empty string" ], 1));
+      return;
+    }
+    let options = this.getOptions();
     if (this.usePromise) {
       this.sortByLocalesPromised(itemId, locales, options)
     }
@@ -457,29 +467,12 @@ let sortbynametweak = {
     if (itemId === null) {
       return;
     }
-    let locales;
-    if (this.settings.useFirefoxLocale) {
-      locales = this.settings.firefoxLocale;
-    }
-    else {
-      locales = this.settings.customLocales;
-      if (locales.indexOf(",") >= 0) {
-        locales = locales.split(/\s*,\s*/);
-      }
-    }
-    if (locales === "") {
-      locales = undefined;
-    }
+    let locales = this.getLocales();
     if (!LocalesSupported(locales)) {
       alert(this.strings.formatStringFromName("message.invalidLanguageTag", [ locales !== "" ? locales : "Empty string" ], 1));
       return;
     }
-    let options = {};
-    this.optionList.forEach(e => {
-      if (this.settings.included_options[e]) {
-        options[e] = this.settings.options[e];
-      }
-    });
+    let options = this.getOptions();
     if (this.usePromise) {
       this.sortByURLPromised(itemId, locales, options)
     }
