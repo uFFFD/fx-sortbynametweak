@@ -13,7 +13,7 @@ ARGS = --addon $(XPI) --preferences user.json --app-arg "-jsconsole" \
        --pref "browser.places.useAsyncTransactions:$(ASYNC)"
 
 xpi:
-	python xpi.py $(XPI) install.rdf chrome.manifest icon.png icon64.png content/ defaults/ locale/
+	python xpi.py $(XPI) install.rdf chrome.manifest COPYING icon.png icon64.png content/ defaults/ locale/
 
 run: xpi
 	mozrunner $(ARGS) --binary $(BINARY)
