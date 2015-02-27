@@ -48,6 +48,14 @@ const sbntOptions = {
     });
     this._testStrings = $("sbnt_pref_testStrings").value;
     this.testLocales();
+
+    let lastTab = $("sbnt_pref_lastSelectedTabIndex").value;
+    if (lastTab != null && lastTab >= 0 && lastTab < $("tablist").tabs.itemCount) {
+      $("tablist").selectedIndex = lastTab;
+    }
+    $("tablist").tabs.addEventListener("select", function() {
+      $("sbnt_pref_lastSelectedTabIndex").valueFromPreferences = $("tablist").selectedIndex;
+    });
   },
 
   unload: function() {

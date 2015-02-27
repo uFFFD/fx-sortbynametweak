@@ -17,6 +17,9 @@
 
   <prefpane>
     <preferences>
+      <preference id="sbnt_pref_lastSelectedTabIndex"
+                  name="extensions.sortbynametweak@uFFFD.lastSelectedTabIndex"
+                  type="int" />
       <preference id="sbnt_pref_showPlacesContextMenu"
                   name="extensions.sortbynametweak@uFFFD.showPlacesContextMenu"
                   type="int" />
