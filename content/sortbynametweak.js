@@ -56,6 +56,8 @@ let sortbynametweak = {
           this.settings.showPlacesCM = this.getPref(data);
           this.updatePlacesContextMenu();
           break;
+        case "extensions.sortbynametweak@uFFFD.showSortByURL":
+          this.settings.showSortByURL = this.getPref(data);
         case "general.useragent.locale":
           this.settings.firefoxLocale = this.getFirefoxLocale();
           break;
@@ -151,6 +153,8 @@ let sortbynametweak = {
     switch (prefName) {
       case "extensions.sortbynametweak@uFFFD.showPlacesContextMenu":
         return this.getIntPref(prefName, 0);
+      case "extensions.sortbynametweak@uFFFD.showSortByURL":
+        return this.getBoolPref(prefName, false);
       case "extensions.sortbynametweak@uFFFD.useFirefoxLocale":
         return this.getBoolPref(prefName, true);
       case "extensions.sortbynametweak@uFFFD.customLocales":
@@ -195,6 +199,7 @@ let sortbynametweak = {
     });
     this.settings = {
       showPlacesCM: this.getPref("extensions.sortbynametweak@uFFFD.showPlacesContextMenu"),
+      showSortByURL: this.getPref("extensions.sortbynametweak@uFFFD.showSortByURL"),
       firefoxLocale: this.getFirefoxLocale(),
       useFirefoxLocale: this.getPref("extensions.sortbynametweak@uFFFD.useFirefoxLocale"),
       customLocales: this.getPref("extensions.sortbynametweak@uFFFD.customLocales"),
@@ -284,6 +289,9 @@ let sortbynametweak = {
       default:
         break;
     }
+    const sortByURL = document.getElementById("sortbynametweak_sortByURL");
+    if (sortByURL)
+      sortByURL.setAttribute("hidden", this.settings.showSortByURL ? "false" : "true");
     this.setMenuEnabled(this.isCmdEnabled);
   },
 
@@ -291,8 +299,10 @@ let sortbynametweak = {
     [
       "sortbynametweak_sortByLocales",
       "sortbynametweak_sortBySQL",
+      "sortbynametweak_sortByURL",
       "sortbynametweakCmd_sortByLocales",
-      "sortbynametweakCmd_sortBySQL"
+      "sortbynametweakCmd_sortBySQL",
+      "sortbynametweakCmd_sortByURL",
     ].forEach(e => this.setNodeEnabled(e, enabled));
   },
 

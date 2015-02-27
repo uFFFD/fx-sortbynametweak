@@ -9,6 +9,7 @@
 <!ENTITY pcmShowSortBySQLOnly.label                     "只顯示基於 SQL 的『依名稱排序』">
 <!ENTITY pcmReplaceOrigWithSortByLocaleCompare.label    "使用基於 localeCompare 的『依名稱排序』取代原始的『依名稱排序』">
 <!ENTITY pcmReplaceOrigWithSortBySQL.label              "使用基於 SQL 的『依名稱排序』取代原始的『依名稱排序』">
+<!ENTITY showSortByURL.label                            "顯示『依網址排序』">
 <!ENTITY localeCompareLocales.label                     "localeCompare 地區設定">
 <!ENTITY useFirefoxLocale.label                         "Firefox">
 <!ENTITY useCustomLocales.label                         "自訂">

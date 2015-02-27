@@ -9,6 +9,7 @@
 <!ENTITY pcmShowSortBySQLOnly.label                     "Show SQL based &quot;Sort By Name&quot; only">
 <!ENTITY pcmReplaceOrigWithSortByLocaleCompare.label    "Replace original &quot;Sort By Name&quot; with localeCompare based one">
 <!ENTITY pcmReplaceOrigWithSortBySQL.label              "Replace original &quot;Sort By Name&quot; with SQL based one">
+<!ENTITY showSortByURL.label                            "Show &quot;Sort By Location&quot;">
 <!ENTITY localeCompareLocales.label                     "localeCompare locales">
 <!ENTITY useFirefoxLocale.label                         "Firefox">
 <!ENTITY useCustomLocales.label                         "Custom">
