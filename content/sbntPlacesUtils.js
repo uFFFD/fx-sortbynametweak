@@ -202,6 +202,15 @@ SBNTSortFolderByNameTransaction.prototype.doTransaction = function SFBNTXN_doTra
   // sort between separators
   let newOrder = [];
   let preSep = []; // temporary array for sorting each group of items
+  let urlCompare = (a, b, locales, options) => {
+    // don't sort sub folder by location
+    if (PlacesUtils.nodeIsContainer(a))
+      return 0;
+    let http = /^https?:/;
+    if (http.test(a.uri) && http.test(b.uri))
+      return a.uri.replace(http, "").localeCompare(b.uri.replace(http, ""), locales, options);
+    return a.uri.localeCompare(b.uri, locales, options);
+  };
   let sortingMethod =
     function (a, b) {
       if (PlacesUtils.nodeIsContainer(a) && !PlacesUtils.nodeIsContainer(b))
@@ -218,7 +227,7 @@ SBNTSortFolderByNameTransaction.prototype.doTransaction = function SFBNTXN_doTra
         case SBNTPlacesUtils.SORT_BY_SQL:
           return orderBySQL[a.itemId] - orderBySQL[b.itemId];
         case SBNTPlacesUtils.SORT_BY_URL:
-          return a.uri.localeCompare(b.uri, locales, options);
+          return urlCompare(a, b, locales, options);
         default:
           return a.title.localeCompare(b.title);
       }

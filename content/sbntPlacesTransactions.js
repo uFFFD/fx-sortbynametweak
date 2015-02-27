@@ -961,12 +961,21 @@ SBNTPT.SortByURL.prototype = {
     // Sort between separators.
     let newOrder = [], // nodes, in the new order.
         preSep   = []; // Temporary array for sorting each group of nodes.
+    let urlCompare = (a, b, locales, options) => {
+      // don't sort sub folder by location
+      if (PlacesUtils.nodeIsContainer(a))
+        return 0;
+      let http = /^https?:/;
+      if (http.test(a.uri) && http.test(b.uri))
+        return a.uri.replace(http, "").localeCompare(b.uri.replace(http, ""), locales, options);
+      return a.uri.localeCompare(b.uri, locales, options);
+    };
     let sortingMethod = (a, b) => {
       if (PlacesUtils.nodeIsContainer(a) && !PlacesUtils.nodeIsContainer(b))
         return -1;
       if (!PlacesUtils.nodeIsContainer(a) && PlacesUtils.nodeIsContainer(b))
         return 1;
-      return a.uri.localeCompare(b.uri, aLocales, aOptions);
+      return urlCompare(a, b, aLocales, aOptions);
     };
 
     for (let i = 0; i < count; ++i) {
